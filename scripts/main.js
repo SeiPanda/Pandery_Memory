@@ -1,5 +1,5 @@
-let count1 = 1;
-let count2 = 1;
+let count1 = 0;
+let count2 = 0;
 
 document.querySelector("#buttonStart").addEventListener("click", handleClickButtonStart);
 
@@ -35,9 +35,11 @@ function handleClickCard(e) {
 
             setTimeout( () => {
                 if( document.querySelector("#firstPlayer").classList.contains("currentPlayer")){
-                    document.querySelector("#firstScore").innerText = count1++;
+                    count1 = count1 + 1
+                    document.querySelector("#firstScore").innerText = count1;
                 }else {
-                    document.querySelector("#secondScore").innerText = count2++;
+                    count2 = count2 + 1
+                    document.querySelector("#secondScore").innerText = count2;
                 }
 
                 document.querySelectorAll(".card.flip")[0].style.visibility = "hidden";
@@ -70,8 +72,10 @@ function handleClickCard(e) {
 
 
 function handleClickButtonStart() {
-    document.querySelector("#firstScore").innerText = 0;
-    document.querySelector("#secondScore").innerText = 0;
+    count2 = 0;
+    count1 = 0;
+    document.querySelector("#firstScore").innerText = count1;
+    document.querySelector("#secondScore").innerText = count2;
 
     document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
     document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );

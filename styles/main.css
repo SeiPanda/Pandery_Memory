@@ -14,9 +14,8 @@ body {
     align-items: center;
     justify-content: space-between;
     background-color: #404040;
-    padding: 0 1.5rem;
+    padding: 1.5rem 1.5rem;
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
-    height: min-content;
     margin: 1em 2em 2em;
     border-radius: .25rem;
 }
@@ -29,7 +28,7 @@ body {
 
 #heading {
     color: whitesmoke;
-    font-size: 48px;
+    font-size: 3.5em;
     font-family: magic;
 }
 
@@ -39,7 +38,7 @@ body {
 
 #subHeading {
     color: white;
-    font-size: 18px;
+    font-size: 1.5em;
     font-family: magic;
 }
 
@@ -50,6 +49,7 @@ body {
   border: 2px solid;
   font-family: magic;
   padding: 0.5rem;
+  font-size: 1.5em;
 }
 
 #playerSection {
@@ -60,6 +60,7 @@ body {
 
 .player {
   font-family: magic;
+  font-size: 1.5em;
   color: whitesmoke;
 }
 
