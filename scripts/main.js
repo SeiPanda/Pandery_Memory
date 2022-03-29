@@ -1,11 +1,10 @@
 let count1 = 0;
 let count2 = 0;
+let currentCategory = "ICON";
+let chosenCategory = "icons";
 
 document.querySelector("#buttonStart").addEventListener("click", handleClickButtonStart);
-
-document.querySelectorAll(".card").forEach( eachCard => {
-    eachCard.addEventListener("click", handleClickCard);
-});
+document.querySelector("#buttonChange").addEventListener("click", handleClickChangeButton);
 
 function handleClickCard(e) {
 
@@ -69,9 +68,9 @@ function handleClickCard(e) {
     }
 }
 
-
-
-function handleClickButtonStart() {
+function handleClickButtonStart() { 
+    document.querySelector("#category-container").style.opacity = "0";
+   
     count2 = 0;
     count1 = 0;
     document.querySelector("#firstScore").innerText = count1;
@@ -80,23 +79,11 @@ function handleClickButtonStart() {
     document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
     document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
 
+    document.querySelector("#playerSection").style.visibility ="visible";
+
     changePlayer();
 
-    let allCards = [...document.querySelectorAll(".card")]; 
-
-    allCards = allCards.sort(() => 0.5 - Math.random());
-
-    document.querySelector(".card-grid").innerHTML = "";
-
-    allCards.forEach(each => {
-        document.querySelector(".card-grid").appendChild( each );
-    })
-
-    allCards.forEach( eachCard => {
-        eachCard.style.visibility = "visible";
-    })
-
-    
+    loadCategoryCards();
 }
 
 
@@ -112,4 +99,131 @@ function changePlayer() {
         document.querySelector("#firstPlayer").classList.toggle("currentPlayer")
     }
     
+}
+
+function openPopup() {
+    document.querySelectorAll(".category").forEach( cate => {
+        cate.addEventListener("click", handleClickCategory);
+    })
+}
+
+
+function handleClickCategory(e) {
+    let target_ = e.target;
+
+    if(target_.nodeName === "DIV") { 
+        target_ = target_.children[0].innerText;
+    }
+
+    if(target_.nodeName === "SPAN") { 
+       target_ = target_.innerText;
+    }
+
+    if(target_ === "HOT" ) {
+        chosenCategory = "images"; 
+    }
+
+    if(target_ === "ICON") {
+        chosenCategory = "icons"; 
+    }
+
+    currentCategory = target_;
+
+    showOnlyOtherCategories(); 
+
+}
+
+
+function handleClickChangeButton() {
+    document.querySelector("#category-container").style.visibility ="visible";
+    document.querySelector("#category-container").style.opacity = "1";
+    
+    showOnlyOtherCategories();
+
+    openPopup();
+}
+
+function showOnlyOtherCategories() {
+    document.querySelectorAll(".category").forEach( categ => {
+        console.log(categ)
+        console.log(currentCategory)
+        if(categ.children[0].innerText === currentCategory) {
+            categ.style.visibility = "hidden";
+        }else {
+            categ.style.visibility ="visible";
+        }
+    })
+}
+
+
+function loadCategoryCards() {
+    fetch( "/config/cards.json" )
+        .then( json => json.json() )
+        .then( categories => {
+            //über alle cards loopen
+            console.log( categories[chosenCategory] );
+            document.querySelector( ".card-grid" ).innerHTML = "";
+            categories[chosenCategory].forEach( card_name => {
+                // div der card erstellen
+                let card = document.createElement( "div" );
+                card.classList.add( "card" );
+
+                let card_front = document.createElement( "div" );
+                card_front.classList.add( "card_front" );
+
+                let card_back = document.createElement( "div" );
+                card_back.classList.add( "card_back" );
+
+                if( chosenCategory === "icons" ) {
+                    let icon = document.createElement( "i" );
+                    
+
+                    card_name.split(" ").forEach( split_part => {
+                        icon.classList.add( split_part );
+                    });
+
+                    icon.classList.add( "icon-card" );
+                    
+                    card_front.appendChild( icon );
+                }
+
+                if( chosenCategory === "images" ) {
+                    let image = document.createElement( "img" );
+                    image.src = card_name;
+                    
+                    card_front.appendChild( image );
+                }
+
+                card.appendChild( card_front );
+                card.appendChild( card_back );
+
+                let second_card = card.cloneNode(true);
+
+                card.addEventListener("click", handleClickCard);
+                second_card.addEventListener("click", handleClickCard);
+                
+
+                document.querySelector( ".card-grid" ).appendChild( card );
+                document.querySelector( ".card-grid" ).appendChild( second_card );
+
+            } );
+
+            sortCardsRandom();
+        } );
+}
+
+function sortCardsRandom() {
+    let allCards = [...document.querySelectorAll(".card")]; 
+
+    allCards = allCards.sort(() => 0.5 - Math.random());
+
+    document.querySelector(".card-grid").innerHTML = "";
+
+    allCards.forEach(each => {
+        document.querySelector(".card-grid").appendChild( each );
+    });
+
+    allCards.forEach( eachCard => {
+        eachCard.style.visibility = "visible";
+    })
 }

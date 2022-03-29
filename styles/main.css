@@ -2,34 +2,67 @@
     font-family: magic;
     src: url("../fonts/Magic\ Frankie.ttf");
 }
+@font-face {
+  font-family: altona;
+  src: url("../fonts/AltonaSans-Regular.ttf");
+}
 
 
 body {
-    background-color: #242424;
-    margin: 0;
-  }
+  background-color: #242424;
+  margin: 0;
+}
+
+/*Pop Up*/
+
+#category-container {
+  visibility: hidden;
+  margin: 1em 2em 2em;
+  border-radius: 4px;
+}
+
+#inner-container {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ text-align: center;
+ gap: 1em;
+
+}
+
+.category {
+
+  color: white;
+  font-size: 1.5rem;
+  background-color: #229e9e7c;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: altona;
+
+}
+
+/*Header Section*/
 
 #header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #404040;
-    padding: 1.5rem 1.5rem;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
-    margin: 1em 2em 2em;
-    border-radius: .25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #404040;
+  padding: 1.5rem 1.5rem;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  margin: 1em 2em 2em;
+  border-radius: .25rem;
 }
 
 #heading-container {
-    padding: 4px;
-    display: flex;
-    align-items: baseline;
+  padding: 4px;
+  display: flex;
+  align-items: baseline;
 }
 
 #heading {
-    color: whitesmoke;
-    font-size: 3.5em;
-    font-family: magic;
+  color: whitesmoke;
+  font-size: 3.5em;
+  font-family: magic;
 }
 
 .fa-leaf {
@@ -37,9 +70,15 @@ body {
 }
 
 #subHeading {
-    color: white;
-    font-size: 1.5em;
-    font-family: magic;
+  color: white;
+  font-size: 1.5em;
+  font-family: magic;
+}
+
+#buttonSection {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 }
 
 #buttonStart {
@@ -47,13 +86,24 @@ body {
   background-color: #1aebeb44;
   border-radius: .25rem;
   border: 2px solid;
-  font-family: magic;
+  font-family: altona;
+  padding: 0.5rem;
+  font-size: 1.5em;
+}
+
+#buttonChange {
+  color: white;
+  background-color: #1aebeb44;
+  border-radius: .25rem;
+  border: 2px solid;
+  font-family: altona;
   padding: 0.5rem;
   font-size: 1.5em;
 }
 
 #playerSection {
   display: flex;
+  visibility: hidden;
   flex-direction: row;
   text-align: center;
 }
@@ -76,58 +126,64 @@ body {
   padding-left: 5rem;
 }
 
+
+/*Card Section*/
+
 .container {
     margin: 1rem 2rem;
 }
 
 
 .card-grid {
-    display: grid;
-    align-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
   
-  .card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    border-radius: .25rem;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
-    transform-style: preserve-3d;
-    transition: 150ms;
-    height: 150px;
-    cursor: pointer;
-    transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
-    visibility: hidden;
-  }
-  
-  .card:hover {
-    --translate-y: -2px;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
-  }
-  
-  .flip {
-    --rotate-y: 180deg;
-    background-color: #229e9e;
-  }
-  
-  .card_back {
-    height: calc(100% - 2rem);
-    width: calc(100% - 2rem);
-    background-color: #404040;
-    border-radius: .25rem;
-  }
-  
-  .card_front,
-  .card_back {
-    position: absolute;
-    padding: 1rem;
-    backface-visibility: hidden;
-  }
-  
-  .card_front {
-    transform: rotateY(180deg);
-  }
-  
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: .25rem;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
+  transform-style: preserve-3d;
+  transition: 150ms;
+  height: 200px;
+  cursor: pointer;
+  transform: perspective(1000px) rotateY(var(--rotate-y, 0)) translateY(var(--translate-y, 0));
+  visibility: hidden;
+}
+
+.card:hover {
+  --translate-y: -2px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .5);
+}
+
+.flip {
+  --rotate-y: 180deg;
+  background-color: #229e9e;
+}
+
+.card_back {
+  height: calc(100% - 2rem);
+  width: calc(100% - 2rem);
+  background-color: #404040;
+  border-radius: .25rem;
+}
+
+.card_front,
+.card_back {
+  position: absolute;
+  padding: 1rem;
+  backface-visibility: hidden;
+}
+
+.card_front {
+  transform: rotateY(180deg);
+}
+
+.icon-card {
+  font-size: 1.5em;
+}
