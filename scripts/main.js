@@ -1,10 +1,13 @@
 let count1 = 0;
 let count2 = 0;
-let currentCategory = "ICON";
 let chosenCategory = "icons";
+let card_length;
+let currentCategory = "ICON";
 
 document.querySelector("#buttonStart").addEventListener("click", handleClickButtonStart);
 document.querySelector("#buttonChange").addEventListener("click", handleClickChangeButton);
+
+
 
 function handleClickCard(e) {
 
@@ -46,8 +49,13 @@ function handleClickCard(e) {
             }, 1000 );
 
             setTimeout( () => {
+                card_length = card_length - 2;
                 document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
                 document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
+                if(card_length === 0){
+                    document.querySelector("#winner-banner").style.visibility = "visible";
+                }
+                
             }, 1150 );
 
         }else {
@@ -119,12 +127,12 @@ function handleClickCategory(e) {
        target_ = target_.innerText;
     }
 
-    if(target_ === "HOT" ) {
-        chosenCategory = "images"; 
-    }
-
     if(target_ === "ICON") {
         chosenCategory = "icons"; 
+    }
+    
+    if(target_ === "HOT"){
+        chosenCategory = "images"
     }
 
     currentCategory = target_;
@@ -137,19 +145,17 @@ function handleClickCategory(e) {
 function handleClickChangeButton() {
     document.querySelector("#category-container").style.visibility ="visible";
     document.querySelector("#category-container").style.opacity = "1";
-    
     showOnlyOtherCategories();
-
     openPopup();
 }
 
 function showOnlyOtherCategories() {
     document.querySelectorAll(".category").forEach( categ => {
-        console.log(categ)
+        console.log(categ.children[0].innerText)
         console.log(currentCategory)
         if(categ.children[0].innerText === currentCategory) {
-            categ.style.visibility = "hidden";
-        }else {
+            categ.style.visibility ="hidden";
+        }else{ 
             categ.style.visibility ="visible";
         }
     })
@@ -161,7 +167,6 @@ function loadCategoryCards() {
         .then( json => json.json() )
         .then( categories => {
             //über alle cards loopen
-            console.log( categories[chosenCategory] );
             document.querySelector( ".card-grid" ).innerHTML = "";
             categories[chosenCategory].forEach( card_name => {
                 // div der card erstellen
@@ -214,6 +219,9 @@ function loadCategoryCards() {
 
 function sortCardsRandom() {
     let allCards = [...document.querySelectorAll(".card")]; 
+
+    card_length = allCards.length
+    console.log(card_length)
 
     allCards = allCards.sort(() => 0.5 - Math.random());
 
