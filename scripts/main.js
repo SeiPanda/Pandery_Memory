@@ -7,8 +7,6 @@ let currentCategory = "ICON";
 document.querySelector("#buttonStart").addEventListener("click", handleClickButtonStart);
 document.querySelector("#buttonChange").addEventListener("click", handleClickChangeButton);
 
-
-
 function handleClickCard(e) {
 
     if(document.querySelectorAll(".card.flip").length >= 2) {
@@ -81,6 +79,7 @@ function handleClickButtonStart() {
    
     count2 = 0;
     count1 = 0;
+
     document.querySelector("#firstScore").innerText = count1;
     document.querySelector("#secondScore").innerText = count2;
 
@@ -94,7 +93,6 @@ function handleClickButtonStart() {
     loadCategoryCards();
 }
 
-
 function changePlayer() {
  
     document.querySelector("#firstPlayer").classList.toggle("currentPlayer");
@@ -106,7 +104,6 @@ function changePlayer() {
         document.querySelector("#secondPlayer").classList.add("currentPlayer")
         document.querySelector("#firstPlayer").classList.toggle("currentPlayer")
     }
-    
 }
 
 function openPopup() {
@@ -137,30 +134,25 @@ function handleClickCategory(e) {
 
     currentCategory = target_;
 
-    showOnlyOtherCategories(); 
-
+    markCurrentCategorie();
 }
 
-
 function handleClickChangeButton() {
-    document.querySelector("#category-container").style.visibility ="visible";
-    document.querySelector("#category-container").style.opacity = "1";
-    showOnlyOtherCategories();
+    document.querySelector("#category-container").style.visibility = "visible";
+    markCurrentCategorie();
     openPopup();
 }
 
-function showOnlyOtherCategories() {
+function markCurrentCategorie() {
     document.querySelectorAll(".category").forEach( categ => {
-        console.log(categ.children[0].innerText)
-        console.log(currentCategory)
+        //console.log(categ.children[0].innerText)
+        categ.classList.remove("current");
+
         if(categ.children[0].innerText === currentCategory) {
-            categ.style.visibility ="hidden";
-        }else{ 
-            categ.style.visibility ="visible";
+            categ.classList.add("current");
         }
     })
 }
-
 
 function loadCategoryCards() {
     fetch( "/config/cards.json" )
@@ -182,7 +174,6 @@ function loadCategoryCards() {
                 if( chosenCategory === "icons" ) {
                     let icon = document.createElement( "i" );
                     
-
                     card_name.split(" ").forEach( split_part => {
                         icon.classList.add( split_part );
                     });
@@ -207,7 +198,6 @@ function loadCategoryCards() {
                 card.addEventListener("click", handleClickCard);
                 second_card.addEventListener("click", handleClickCard);
                 
-
                 document.querySelector( ".card-grid" ).appendChild( card );
                 document.querySelector( ".card-grid" ).appendChild( second_card );
 
