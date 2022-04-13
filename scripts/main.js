@@ -4,11 +4,16 @@ let chosenCategory = "icons";
 let card_length;
 let currentCategory = "ICON";
 
+document.querySelector("#heading-container").addEventListener("click", backToHome);
+
+function backToHome() {
+    location.reload();
+}
+
 document.querySelector("#buttonStart").addEventListener("click", handleClickButtonStart);
 document.querySelector("#buttonChange").addEventListener("click", handleClickChangeButton);
 
-function handleClickCard(e) {
-
+function handleClickCard(e) {  
     if(document.querySelectorAll(".card.flip").length >= 2) {
         return;
     }
@@ -24,73 +29,88 @@ function handleClickCard(e) {
     }
 
     target.classList.add("flip"); 
+
     
     if(document.querySelectorAll(".card.flip").length === 2) { 
-        console.log( document.querySelectorAll(".card.flip")[0].children[0].children[0].classList[1] );
-        console.log( document.querySelectorAll(".card.flip")[1].children[0].children[0].classList[1] );
-        if(document.querySelectorAll(".card.flip")[0].children[0].children[0].classList[1] == document.querySelectorAll(".card.flip")[1].children[0].children[0].classList[1]) {
-            setTimeout( () => {
-                document.querySelectorAll(".card.flip").forEach( e => e.style.background ="yellowgreen" );
-            }, 150 );
 
-            setTimeout( () => {
-                if( document.querySelector("#firstPlayer").classList.contains("currentPlayer")){
-                    count1 = count1 + 1
-                    document.querySelector("#firstScore").innerText = count1;
-                }else {
-                    count2 = count2 + 1
-                    document.querySelector("#secondScore").innerText = count2;
-                }
+        
+        if(chosenCategory === "images"){
 
-                document.querySelectorAll(".card.flip")[0].style.visibility = "hidden";
-                document.querySelectorAll(".card.flip")[1].style.visibility = "hidden";
-            }, 1000 );
+            console.log( document.querySelectorAll(".card.flip")[0].innerHTML);
+            console.log( document.querySelectorAll(".card.flip")[1].innerHTML);
 
-            setTimeout( () => {
-                card_length = card_length - 2;
-                document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
-                document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
-                if(card_length === 0){
-                    document.querySelector("#winner-banner").style.visibility = "visible";
-                }
-                
-            }, 1150 );
-
+            if(document.querySelectorAll(".card.flip")[0].innerHTML === document.querySelectorAll(".card.flip")[1].innerHTML) {
+                correctCards();
+    
+            }else {
+               wrongCards();
+            }
+          
         }else {
-            setTimeout( () => {
-                if(document.querySelector("#firstPlayer").classList.contains("currentPlayer")){
-                    document.querySelector("#secondPlayer").classList.add("currentPlayer")
-                    document.querySelector("#firstPlayer").classList.remove("currentPlayer")
-                }else {
-                    document.querySelector("#secondPlayer").classList.remove("currentPlayer")
-                    document.querySelector("#firstPlayer").classList.add("currentPlayer")
-                }
-            }, 1000 );
+        
+            if(document.querySelectorAll(".card.flip")[0].children[0].children[0].classList[1] == document.querySelectorAll(".card.flip")[1].children[0].children[0].classList[1]) {
+                
+                correctCards();
+            }else {
+                wrongCards();
+            }
 
-            setTimeout( () => {
-                document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
-            }, 1150 );
         }
     }
 }
 
+function correctCards() {
+    setTimeout( () => {
+        document.querySelectorAll(".card.flip").forEach( e => e.style.background ="yellowgreen" );
+    }, 150 );
+
+    setTimeout( () => {
+        if( document.querySelector("#firstPlayer").classList.contains("currentPlayer")){
+            count1 = count1 + 1
+            document.querySelector("#firstScore").innerText = count1;
+        }else {
+            count2 = count2 + 1
+            document.querySelector("#secondScore").innerText = count2;
+        }
+
+        document.querySelectorAll(".card.flip")[0].style.visibility = "hidden";
+        document.querySelectorAll(".card.flip")[1].style.visibility = "hidden";
+    }, 1000 );
+
+    setTimeout( () => {
+        card_length = card_length - 2;
+        document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
+        document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
+        if(card_length === 0){
+            document.querySelector("#winner-banner").style.visibility = "visible";
+        }
+        
+    }, 1150 );
+}
+
+function wrongCards() {
+    setTimeout( () => {
+        if(document.querySelector("#firstPlayer").classList.contains("currentPlayer")){
+            document.querySelector("#secondPlayer").classList.add("currentPlayer")
+            document.querySelector("#firstPlayer").classList.remove("currentPlayer")
+        }else {
+            document.querySelector("#secondPlayer").classList.remove("currentPlayer")
+            document.querySelector("#firstPlayer").classList.add("currentPlayer")
+        }
+    }, 1000 );
+
+    setTimeout( () => {
+        document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
+    }, 1150 );
+}
+
 function handleClickButtonStart() { 
-    document.querySelector("#category-container").style.opacity = "0";
-   
-    count2 = 0;
-    count1 = 0;
-
-    document.querySelector("#firstScore").innerText = count1;
-    document.querySelector("#secondScore").innerText = count2;
-
-    document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
-    document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
-
-    document.querySelector("#playerSection").style.visibility ="visible";
-
-    changePlayer();
-
-    loadCategoryCards();
+    document.querySelector("#winner-banner").style.visibility = "hidden";
+    if(document.querySelector("#buttonStart").innerText === "Restart"){
+        startGame();
+    }else {
+        openPopup();
+    }
 }
 
 function changePlayer() {
@@ -107,10 +127,46 @@ function changePlayer() {
 }
 
 function openPopup() {
+    document.querySelector("#category-container").style.visibility = "visible";
+    markCurrentCategorie();
     document.querySelectorAll(".category").forEach( cate => {
         cate.addEventListener("click", handleClickCategory);
     })
 }
+
+document.querySelector("#submitButton").addEventListener("click", handleSubmitButton);
+
+
+function handleSubmitButton() {
+    closePopup_StartGame();
+}
+
+function closePopup_StartGame() {
+    document.querySelector("#category-container").style.visibility = "hidden";
+    document.querySelector("#buttonChange").style.visibility = "visible";
+
+    document.querySelector("#buttonStart").innerText ="Restart";
+
+    startGame();
+}
+
+function startGame() {
+    count2 = 0;
+    count1 = 0;
+
+    document.querySelector("#firstScore").innerText = count1;
+    document.querySelector("#secondScore").innerText = count2;
+
+    document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
+    document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
+
+
+    document.querySelector("#playerSection").style.visibility ="visible";
+
+    changePlayer();
+
+    loadCategoryCards();
+};
 
 
 function handleClickCategory(e) {
@@ -138,8 +194,15 @@ function handleClickCategory(e) {
 }
 
 function handleClickChangeButton() {
-    document.querySelector("#category-container").style.visibility = "visible";
-    markCurrentCategorie();
+
+    let allCards = [...document.querySelectorAll(".card")]; 
+
+    allCards.forEach( eachCard => {
+        eachCard.style.visibility = "hidden";
+    })
+
+    document.querySelector("#playerSection").style.visibility ="hidden";
+
     openPopup();
 }
 
