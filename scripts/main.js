@@ -36,9 +36,6 @@ function handleClickCard(e) {
         
         if(chosenCategory === "images"){
 
-            console.log( document.querySelectorAll(".card.flip")[0].innerHTML);
-            console.log( document.querySelectorAll(".card.flip")[1].innerHTML);
-
             if(document.querySelectorAll(".card.flip")[0].innerHTML === document.querySelectorAll(".card.flip")[1].innerHTML) {
                 correctCards();
     
@@ -82,7 +79,7 @@ function correctCards() {
         document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
         document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
         if(card_length === 0){
-            document.querySelector("#winner-banner").style.visibility = "visible";
+            document.querySelector("#winner-banner").style.display = "flex";
         }
         
     }, 1150 );
@@ -105,7 +102,7 @@ function wrongCards() {
 }
 
 function handleClickButtonStart() { 
-    document.querySelector("#winner-banner").style.visibility = "hidden";
+    document.querySelector("#winner-banner").style.display = "none";
     if(document.querySelector("#buttonStart").innerText === "Restart"){
         startGame();
     }else {
@@ -162,6 +159,7 @@ function startGame() {
 
 
     document.querySelector("#playerSection").style.visibility ="visible";
+    document.querySelector(".container").style.display = "block";
 
     changePlayer();
 
@@ -195,13 +193,10 @@ function handleClickCategory(e) {
 
 function handleClickChangeButton() {
 
-    let allCards = [...document.querySelectorAll(".card")]; 
-
-    allCards.forEach( eachCard => {
-        eachCard.style.visibility = "hidden";
-    })
-
+    document.querySelector(".container").style.display = "none";
     document.querySelector("#playerSection").style.visibility ="hidden";
+    document.querySelector("#winner-banner").style.visibility ="hidden";
+    document.querySelector("#buttonStart").style.visibility = "hidden";
 
     openPopup();
 }
@@ -221,6 +216,9 @@ function loadCategoryCards() {
     fetch( "/config/cards.json" )
         .then( json => json.json() )
         .then( categories => {
+
+            document.querySelector("#buttonStart").style.visibility = "visible";
+
             //über alle cards loopen
             document.querySelector( ".card-grid" ).innerHTML = "";
             categories[chosenCategory].forEach( card_name => {
@@ -247,10 +245,12 @@ function loadCategoryCards() {
                 }
 
                 if( chosenCategory === "images" ) {
-                    let image = document.createElement( "img" );
+                    /*let image = document.createElement( "img" );
                     image.src = card_name;
                     
-                    card_front.appendChild( image );
+                    card_front.appendChild( image );*/
+                    card_front.style.backgroundImage = "url(" + card_name + ")";
+                    card_front.classList.add( "image" );
                 }
 
                 card.appendChild( card_front );

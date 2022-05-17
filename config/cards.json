@@ -1,4 +1,4 @@
 {
-    "icons": ["fas fa-apple-alt", "fas fa-cloud"],
-    "images": ["../img/card_bild1.jpg", "../img/jujutsu-kaisen-anime-boys-anime-hd-wallpaper-preview.jpg"]
+    "icons": ["fas fa-apple-alt", "fas fa-cloud", "fa fa-leaf", "fa fa-seedling", "fa fa-spa", "fa fa-otter"],
+    "images": ["../img/card_bild_test1.jpg", "../img/card_bild_test2.jpg", "../img/card_bild.jpeg", "../img/card_bild1.jpeg", "../img/card_bild2.jpeg", "../img/card_bild3.jpeg", "../img/card_bild4.jpeg"]
 }
