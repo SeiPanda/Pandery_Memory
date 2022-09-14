@@ -79,6 +79,16 @@ function correctCards() {
         document.querySelectorAll(".card.flip").forEach( e => e.style.background ="#229e9e" );
         document.querySelectorAll(".card.flip").forEach( e => e.classList.remove("flip") );
         if(card_length === 0){
+            if(document.querySelector("#firstPlayer").classList.contains("currentPlayer")){
+                document.querySelector("#winner-player").innerText = "Player 1 ";
+                document.querySelector("#score").innerText = count1;
+            }else{
+                document.querySelector("#winner-player").innerText = "Player 2 ";
+                document.querySelector("#score").innerText = count2;
+            }
+
+            
+          
             document.querySelector("#winner-banner").style.display = "flex";
         }
         
