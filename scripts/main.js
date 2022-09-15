@@ -87,8 +87,6 @@ function correctCards() {
                 document.querySelector("#score").innerText = count2;
             }
 
-            
-          
             document.querySelector("#winner-banner").style.display = "flex";
         }
         
@@ -205,7 +203,7 @@ function handleClickChangeButton() {
 
     document.querySelector(".container").style.display = "none";
     document.querySelector("#playerSection").style.visibility ="hidden";
-    document.querySelector("#winner-banner").style.visibility ="hidden";
+    document.querySelector("#winner-banner").style.display ="none";
     document.querySelector("#buttonStart").style.visibility = "hidden";
 
     openPopup();
